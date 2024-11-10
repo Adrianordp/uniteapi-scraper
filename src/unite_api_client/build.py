@@ -1,11 +1,15 @@
 class Build:
-    def __init__(self, pokemon, win_rate, pick_rate, move1, move2, item="Any"):
+    def __init__(
+        self, pokemon: "Pokemon", win_rate, pick_rate, move1, move2, item="Any"
+    ):
         self.pokemon = pokemon
         self.win_rate = win_rate
         self.pick_rate = pick_rate
         self.move1 = move1
         self.move2 = move2
         self.item = item
+        self.pkm_win_rate = pokemon.win_rate
+        self.pkm_pick_rate = pokemon.pick_rate
 
     def __str__(self):
         return (
@@ -14,7 +18,9 @@ class Build:
             f"win rate: {self.win_rate} %, "
             f"move_1: {self.move1}, "
             f"move_2: {self.move2}, "
-            f"item: {self.item}"
+            f"item: {self.item}, "
+            f"pokemon win rate: {self.pkm_win_rate} %, "
+            f"pokemon pick rate: {self.pkm_pick_rate} %"
         )
 
     def __gt__(self, other):

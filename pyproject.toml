@@ -10,8 +10,8 @@ dependencies = [
     "pytest-cov",
     "pillow",
     "flask",
-    "requests",
-    "beautifulsoup4"
+    "httpx",
+    "beautifulsoup4",
     ]
 authors = [
     { name = "Adriano Rodrigues de Paula", email = "adrianordp1@gmail.com"},

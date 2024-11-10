@@ -18,16 +18,21 @@ class Pokemon:
         win_rate: float = 0,
         pick_rate: float = 0,
         role: Role = None,
-        move_1: str = None,
-        move_2: str = None,
+        moves_1: set[str] = set(),
+        moves_2: set[str] = set(),
+        builds: set[Build] = set(),
     ):
         self.name = name
-        self.builds = [Build] * 0
+        self.url_name = name.casefold().replace(" ", "")
+        self.builds = builds
         self.role = role
         self.pick_rate = pick_rate
         self.win_rate = win_rate
-        self.move_1 = move_1
-        self.move_2 = move_2
+        self.moves_1 = moves_1
+        self.moves_2 = moves_2
+
+    def __str__(self):
+        return self.name
 
     def set_role(self, role: Role):
         self.role = role
@@ -39,10 +44,10 @@ class Pokemon:
         self.win_rate = win_rate
 
     def add_build(self, build: Build):
-        self.builds.append(build)
+        self.builds.add(build.__repr__())
 
-    def set_move_1(self, move_1: str):
-        self.move_1 = move_1
+    def add_move_1(self, move_1: str):
+        self.moves_1.add(move_1)
 
-    def set_move_2(self, move_2: str):
-        self.move_2 = move_2
+    def add_move_2(self, move_2: str):
+        self.moves_2.add(move_2)

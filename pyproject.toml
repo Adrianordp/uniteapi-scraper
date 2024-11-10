@@ -17,6 +17,12 @@ authors = [
     { name = "Adriano Rodrigues de Paula", email = "adrianordp1@gmail.com"},
 ]
 #[project.scripts]
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+line_length = 79
 
 description = """
 Get data from Unite API

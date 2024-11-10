@@ -36,4 +36,10 @@ class Build:
         return self.win_rate != other.win_rate
 
     def __repr__(self):
-        return f"Build(pokemon={self.pokemon}, win_rate={self.win_rate}, pick_rate={self.pick_rate}, move1={self.move1}, move2={self.move2})"
+        return (
+            f"Build(pokemon={self.pokemon}, "
+            f"win_rate={self.win_rate}, "
+            f"pick_rate={self.pick_rate}, "
+            f"move1={self.move1}, "
+            f"move2={self.move2})"
+        )

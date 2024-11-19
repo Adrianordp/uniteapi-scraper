@@ -16,6 +16,12 @@ dependencies = [
 authors = [
     { name = "Adriano Rodrigues de Paula", email = "adrianordp1@gmail.com"},
 ]
+
+description = """
+Get data from Unite API
+"""
+readme = "README.md"
+
 #[project.scripts]
 [tool.black]
 line-length = 79
@@ -23,8 +29,3 @@ line-length = 79
 [tool.isort]
 profile = "black"
 line_length = 79
-
-description = """
-Get data from Unite API
-"""
-readme = "README.md"

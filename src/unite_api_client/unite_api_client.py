@@ -1,5 +1,5 @@
-from httpx import AsyncClient
 from bs4 import BeautifulSoup
+from httpx import AsyncClient
 
 from unite_api_client.build import Build
 from unite_api_client.pokemon import Pokemon

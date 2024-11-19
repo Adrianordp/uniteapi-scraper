@@ -1,6 +1,7 @@
-from unite_api_client.unite_api_client import UniteAPIClient
-from asyncio import run, gather, create_task
 import timeit
+from asyncio import create_task, gather, run
+
+from unite_api_client.unite_api_client import UniteAPIClient
 
 
 async def main():

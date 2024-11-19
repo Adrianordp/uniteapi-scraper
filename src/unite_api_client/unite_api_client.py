@@ -108,7 +108,7 @@ class UniteAPIClient:
     def print_by_build_win_rate(self):
         print("\nSorted by win rate")
         self.builds.sort(reverse=True)
-        with open("builds_by_build_win_rate.log", "w") as f:
+        with open("log/builds_by_build_win_rate.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")
@@ -117,7 +117,7 @@ class UniteAPIClient:
         print("\nSorted by pick rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
-        with open("builds_by_build_pick_rate.log", "w") as f:
+        with open("log/builds_by_build_pick_rate.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")
@@ -126,7 +126,7 @@ class UniteAPIClient:
         print("\nSorted by pokemon")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
-        with open("builds_by_pokemon_name.log", "w") as f:
+        with open("log/builds_by_pokemon_name.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")
@@ -135,7 +135,7 @@ class UniteAPIClient:
         print("\nSorted by item")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.item)
-        with open("builds_by_item.log", "w") as f:
+        with open("log/builds_by_item.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")
@@ -144,7 +144,7 @@ class UniteAPIClient:
         print("\nSorted by pokemon win rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_win_rate, reverse=True)
-        with open("builds_by_pokemon_win_rate.log", "w") as f:
+        with open("log/builds_by_pokemon_win_rate.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")
@@ -153,7 +153,7 @@ class UniteAPIClient:
         print("\nSorted by pokemon pick rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
-        with open("builds_by_pokemon_pick_rate.log", "w") as f:
+        with open("log/builds_by_pokemon_pick_rate.log", "w") as f:
             for build in self.builds:
                 print(build)
                 f.write(str(build) + "\n")

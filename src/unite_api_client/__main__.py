@@ -1,13 +1,17 @@
 from unite_api_client.unite_api_client import UniteAPIClient
+from asyncio import run, gather, create_task
+import timeit
 
 
-def main():
+async def main():
     api = UniteAPIClient()
-    api.update_pokemon_list()
-    for pokemon in api.pokemons:
-        print(pokemon)
-        api.get_pokemon_meta(pokemon)
+    task = create_task(api.update_pokemon_list())
+    await task
 
+    result = gather(
+        *[api.get_pokemon_meta(pokemon) for pokemon in api.pokemons]
+    )
+    await result
     api.print_by_build_win_rate()
     api.print_by_build_pick_rate()
     api.print_by_pokemon_name()
@@ -16,4 +20,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    start = timeit.default_timer()
+    run(main())
+    stop = timeit.default_timer()
+    print("Time: ", stop - start)

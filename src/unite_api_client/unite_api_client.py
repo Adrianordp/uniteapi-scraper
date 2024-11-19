@@ -1,4 +1,4 @@
-import httpx
+from httpx import AsyncClient
 from bs4 import BeautifulSoup
 
 from unite_api_client.build import Build
@@ -15,8 +15,9 @@ class UniteAPIClient:
         self.pokemons: list[Pokemon] = [Pokemon] * 0
         self.builds: list[Build] = [Build] * 0
 
-    def update_pokemon_list(self):
-        response = httpx.get(self.meta_url, follow_redirects=True)
+    async def update_pokemon_list(self):
+        async with AsyncClient() as client:
+            response = await client.get(self.meta_url, follow_redirects=True)
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -35,11 +36,12 @@ class UniteAPIClient:
                 response.status_code,
             )
 
-    def get_pokemon_meta(self, pokemon: Pokemon):
-        response = httpx.get(
-            self.route_pokemon_meta_url + pokemon.url_name,
-            follow_redirects=True,
-        )
+    async def get_pokemon_meta(self, pokemon: Pokemon):
+        async with AsyncClient() as client:
+            response = await client.get(
+                self.route_pokemon_meta_url + pokemon.url_name,
+                follow_redirects=True,
+            )
 
         # Check if the request was successful (status code 200)
         if response.status_code != 200:

@@ -82,7 +82,6 @@ class UniteAPIClient:
             build_obj = Build(pokemon, win_rate, pick_rate, move1, move2)
             pokemon.add_build(build_obj)
             self.builds.append(build_obj)
-            print(build_obj)
             for idx in range(3):
                 pick_rate_str = build.select(
                     "div > div:nth-child(1) > p.sc-6d6ea15e-3.LHyXa"
@@ -105,7 +104,6 @@ class UniteAPIClient:
                     pokemon, win_rate, pick_rate, move1, move2, item
                 )
                 self.builds.append(build_obj)
-                print(build_obj)
 
     def print_by_build_win_rate(self):
         print("\nSorted by win rate")

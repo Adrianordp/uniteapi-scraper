@@ -6,8 +6,6 @@ build-backend = "setuptools.build_meta"
 name = "unite_api_client"
 version = "0.0.1"
 dependencies = [
-    "pytest",
-    "pytest-cov",
     "pillow",
     "flask",
     "httpx",
@@ -21,6 +19,14 @@ description = """
 Get data from Unite API
 """
 readme = "README.md"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "pytest",
+    "pytest-cov",
+]
 
 #[project.scripts]
 [tool.black]

@@ -4,7 +4,7 @@ from asyncio import create_task, gather, run
 from unite_api_client.unite_api_client import UniteAPIClient
 
 
-async def main():
+async def uniteapi_client():
     api = UniteAPIClient()
     task = create_task(api.update_pokemon_list())
     await task
@@ -15,8 +15,12 @@ async def main():
     await result
 
 
-if __name__ == "__main__":
+def main():
     start = timeit.default_timer()
-    run(main())
+    run(uniteapi_client())
     stop = timeit.default_timer()
     print("Time: ", stop - start)
+
+
+if __name__ == "__main__":
+    main()

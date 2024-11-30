@@ -51,16 +51,20 @@ class UniteAPIClient:
             )
             return False
         soup = BeautifulSoup(response.content, "html.parser")
-        pick_rate_str = soup.select(
+        items_pick_rate_str = soup.select(
             "div > div.m_4081bf90.mantine-Group-root > div:nth-child(1) > div > p"
         )
-        win_rate_str = soup.select(
+        items_win_rate_str = soup.select(
             "div > div.m_4081bf90.mantine-Group-root > div:nth-child(2) > div > p"
         )
-        pick_rate = float(pick_rate_str[0].get_text().replace("%", ""))
-        win_rate = float(win_rate_str[0].get_text().replace("%", ""))
-        pokemon.set_pick_rate(pick_rate)
-        pokemon.set_win_rate(win_rate)
+        items_pick_rate = float(
+            items_pick_rate_str[0].get_text().replace("%", "")
+        )
+        items_win_rate = float(
+            items_win_rate_str[0].get_text().replace("%", "")
+        )
+        pokemon.set_pick_rate(items_pick_rate)
+        pokemon.set_win_rate(items_win_rate)
         builds = soup.find_all("div", class_="sc-a9315c2e-0 dNgHcB")
         for build in builds:
             move1 = build.select(
@@ -69,28 +73,30 @@ class UniteAPIClient:
             move2 = build.select(
                 "div.fSlRro > div:nth-child(2) > div:nth-child(2) > p"
             )[0].get_text()
-            pick_rate_str = build.select(
+            items_pick_rate_str = build.select(
                 "div.fSlRro > div:nth-child(1) > div:nth-child(1) > p"
             )[1].get_text()
-            win_rate_str = build.select(
+            items_win_rate_str = build.select(
                 "div.fSlRro > div:nth-child(1) > div:nth-child(2) > p"
             )[1].get_text()
             pokemon.add_move_1(move1)
             pokemon.add_move_2(move2)
-            win_rate = float(win_rate_str.replace("%", ""))
-            pick_rate = float(pick_rate_str.replace("%", ""))
-            build_obj = Build(pokemon, win_rate, pick_rate, move1, move2)
+            items_win_rate = float(items_win_rate_str.replace("%", ""))
+            items_pick_rate = float(items_pick_rate_str.replace("%", ""))
+            build_obj = Build(
+                pokemon, items_win_rate, items_pick_rate, move1, move2
+            )
             pokemon.add_build(build_obj)
             self.builds.append(build_obj)
             for idx in range(3):
-                pick_rate_str = build.select(
+                items_pick_rate_str = build.select(
                     "div > div:nth-child(1) > p.sc-6d6ea15e-3.LHyXa"
                 )[idx].get_text()
-                win_rate_str = build.select(
+                items_win_rate_str = build.select(
                     "div > div:nth-child(2) > p.sc-6d6ea15e-3.LHyXa"
                 )[idx].get_text()
-                pick_rate = float(pick_rate_str.replace("%", ""))
-                win_rate = float(win_rate_str.replace("%", ""))
+                items_pick_rate = float(items_pick_rate_str.replace("%", ""))
+                items_win_rate = float(items_win_rate_str.replace("%", ""))
                 item = (
                     build.select(
                         f"div.sc-a9315c2e-3.bpaMUh > div:nth-child("
@@ -101,7 +107,12 @@ class UniteAPIClient:
                     .split("_")[-1]
                 )
                 build_obj = Build(
-                    pokemon, win_rate, pick_rate, move1, move2, item
+                    pokemon,
+                    items_win_rate,
+                    items_pick_rate,
+                    move1,
+                    move2,
+                    item,
                 )
                 self.builds.append(build_obj)
 

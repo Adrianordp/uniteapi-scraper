@@ -23,7 +23,7 @@ class Pokemon:
         builds: set[Build] = set(),
     ):
         self.name = name
-        self.url_name = name.casefold().replace(" ", "")
+        self.url_name = name.casefold().replace(" ", "").replace(".", "")
         self.builds = builds
         self.role = role
         self.pick_rate = pick_rate

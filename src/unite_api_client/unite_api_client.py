@@ -32,7 +32,7 @@ class UniteAPIClient:
                 self.pokemons.append(pokemon)
         else:
             print(
-                "Failed to retrieve the webpage. Status code:",
+                f"Failed to retrieve the webpage {self.meta_url + pokemon.url_name}. Status code:",
                 response.status_code,
             )
 
@@ -46,7 +46,7 @@ class UniteAPIClient:
         # Check if the request was successful (status code 200)
         if response.status_code != 200:
             print(
-                "Failed to retrieve the webpage. Status code:",
+                f"Failed to retrieve the webpage {self.meta_url + pokemon.url_name}. Status code:",
                 response.status_code,
             )
             return False

@@ -37,11 +37,19 @@ class UniteAPIClient:
             )
 
     async def get_pokemon_meta(self, pokemon: Pokemon):
-        async with AsyncClient() as client:
-            response = await client.get(
-                self.route_pokemon_meta_url + pokemon.url_name,
-                follow_redirects=True,
-            )
+        success = False
+        while not success:
+            try:
+                async with AsyncClient() as client:
+                    response = await client.get(
+                        self.route_pokemon_meta_url + pokemon.url_name,
+                        follow_redirects=True,
+                    )
+                success = True
+            except Exception as error:
+                print(
+                    f"Error: {error} in url {self.route_pokemon_meta_url + pokemon.url_name}"
+                )
 
         # Check if the request was successful (status code 200)
         if response.status_code != 200:
@@ -67,6 +75,12 @@ class UniteAPIClient:
         pokemon.set_win_rate(items_win_rate)
         builds = soup.find_all("div", class_="sc-a9315c2e-0 dNgHcB")
         for build in builds:
+            move1and2_pick_rate_str = build.select(
+                "div.sc-34a5201c-0.fSlRro > div:nth-child(1) > div:nth-child(1) > p.sc-6d6ea15e-4.eZnfiD"
+            )[0].get_text()
+            move1and2_win_rate_str = build.select(
+                "div.sc-34a5201c-0.fSlRro > div:nth-child(1) > div:nth-child(2) > p.sc-6d6ea15e-4.eZnfiD"
+            )
             move1 = build.select(
                 "div.fSlRro > div:nth-child(2) > div:nth-child(1) > p"
             )[0].get_text()
@@ -81,10 +95,16 @@ class UniteAPIClient:
             )[1].get_text()
             pokemon.add_move_1(move1)
             pokemon.add_move_2(move2)
+            move1and2_pick_rate = float(
+                move1and2_pick_rate_str.replace("%", "")
+            )
+            move1and2_win_rate = float(
+                move1and2_win_rate_str[0].get_text().replace("%", "")
+            )
             items_win_rate = float(items_win_rate_str.replace("%", ""))
             items_pick_rate = float(items_pick_rate_str.replace("%", ""))
             build_obj = Build(
-                pokemon, items_win_rate, items_pick_rate, move1, move2
+                pokemon, move1, move2, move1and2_win_rate, move1and2_pick_rate
             )
             pokemon.add_build(build_obj)
             self.builds.append(build_obj)
@@ -108,12 +128,15 @@ class UniteAPIClient:
                 )
                 build_obj = Build(
                     pokemon,
-                    items_win_rate,
-                    items_pick_rate,
                     move1,
                     move2,
+                    move1and2_win_rate,
+                    move1and2_pick_rate,
                     item,
+                    items_win_rate,
+                    items_pick_rate,
                 )
+                pokemon.add_build(build_obj)
                 self.builds.append(build_obj)
 
     def print_by_build_win_rate(self):
@@ -131,7 +154,7 @@ class UniteAPIClient:
     def print_by_build_pick_rate(self):
         print("\nSorted by pick rate")
         self.builds.sort(reverse=True)
-        self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
+        self.builds.sort(key=lambda x: x.m1m2i_pick_rate, reverse=True)
         for build in self.builds:
             print(build)
 

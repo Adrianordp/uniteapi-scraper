@@ -1,3 +1,4 @@
+from statistics import quantiles
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
 
@@ -145,6 +146,15 @@ class UniteAPIClient:
         for build in self.builds:
             print(build)
 
+    def save_build_win_rate25(self):
+        threshold = self.get_pick_rate_threshold()
+        self.builds.sort(reverse=True)
+        with open("log/builds_by_build_win_rate25.log", "w") as f:
+            for build in self.builds:
+                if build.pick_rate < threshold:
+                    continue
+                f.write(str(build) + "\n")
+
     def save_build_win_rate(self):
         self.builds.sort(reverse=True)
         with open("log/builds_by_build_win_rate.log", "w") as f:
@@ -220,3 +230,13 @@ class UniteAPIClient:
         with open("log/builds_by_pokemon_pick_rate.log", "w") as f:
             for build in self.builds:
                 f.write(str(build) + "\n")
+
+    def get_pick_rate_threshold(self):
+        self.builds.sort(reverse=True)
+        self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
+        pr_list = []
+        for build in self.builds:
+            pr_list.append(build.pick_rate)
+        quant = quantiles(pr_list)
+        print(f"Quantiles are {quant}")
+        return quant[-1]

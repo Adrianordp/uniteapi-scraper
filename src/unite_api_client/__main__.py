@@ -18,6 +18,7 @@ async def uniteapi_client():
     api.save_pokemon_name()
     api.save_pokemon_win_rate()
     api.save_pokemon_pick_rate()
+    api.save_build_win_rate25()
 
 
 def main():

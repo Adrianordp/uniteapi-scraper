@@ -58,6 +58,19 @@ class Build:
             f"PR: {self.pick_rate:.6f} %"
         )
 
+    @staticmethod
+    def convert_db_data_to_build(data):
+        return Build(
+            pokemon=Pokemon(data[1], data[10], data[11], role=data[2]),
+            move1=data[3],
+            move2=data[4],
+            m1m2_win_rate=data[6],
+            m1m2_pick_rate=data[7],
+            item=data[5],
+            m1m2i_win_rate=data[8],
+            m1m2i_pick_rate=data[9],
+        )
+
     def __gt__(self, other):
         return self.win_rate > other.win_rate
 

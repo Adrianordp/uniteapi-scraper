@@ -7,7 +7,7 @@ class Role(Enum):
     Attacker = 1
     Support = 2
     Defender = 3
-    Speedister = 4
+    Speedster = 4
     Allrounder = 5
 
 

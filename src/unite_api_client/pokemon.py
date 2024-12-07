@@ -2,11 +2,11 @@ from enum import Enum
 
 
 class Role(Enum):
-    Attacker = 1
-    Support = 2
-    Defender = 3
-    Speedster = 4
-    Allrounder = 5
+    ATTACKER = 1
+    SUPPORT = 2
+    DEFENDER = 3
+    SPEEDSTER = 4
+    ALLROUNDER = 5
 
 
 class Pokemon:

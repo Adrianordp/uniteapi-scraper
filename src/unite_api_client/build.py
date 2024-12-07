@@ -1,14 +1,17 @@
+from unite_api_client.pokemon import Pokemon
+
+
 class Build:
     def __init__(
         self,
-        pokemon: "Pokemon",
-        move1,
-        move2,
-        m1m2_win_rate,
-        m1m2_pick_rate,
-        item="Any",
-        m1m2i_win_rate=0,
-        m1m2i_pick_rate=0,
+        pokemon: Pokemon,
+        move1: str,
+        move2: str,
+        m1m2_win_rate: float,
+        m1m2_pick_rate: float,
+        item: str = "Any",
+        m1m2i_win_rate: float = 0,
+        m1m2i_pick_rate: float = 0,
     ):
         self.pokemon = pokemon
         self.move1 = move1

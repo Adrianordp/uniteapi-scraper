@@ -1,7 +1,5 @@
 from enum import Enum
 
-from unite_api_client.build import Build
-
 
 class Role(Enum):
     Attacker = 1
@@ -20,11 +18,9 @@ class Pokemon:
         role: Role = None,
         moves_1: set[str] = set(),
         moves_2: set[str] = set(),
-        builds: set[Build] = set(),
     ):
         self.name = name
         self.url_name = name.casefold().replace(" ", "").replace(".", "")
-        self.builds = builds
         self.role = role
         self.pick_rate = pick_rate
         self.win_rate = win_rate
@@ -42,9 +38,6 @@ class Pokemon:
 
     def set_win_rate(self, win_rate: float):
         self.win_rate = win_rate
-
-    def add_build(self, build: Build):
-        self.builds.add(build.__repr__())
 
     def add_move_1(self, move_1: str):
         self.moves_1.add(move_1)

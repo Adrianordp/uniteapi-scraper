@@ -102,7 +102,6 @@ class UniteAPIClient:
             build_obj = Build(
                 pokemon, move1, move2, move1and2_win_rate, move1and2_pick_rate
             )
-            pokemon.add_build(build_obj)
             self.builds.append(build_obj)
             for idx in range(3):
                 items_pick_rate_str = build.select(
@@ -132,7 +131,6 @@ class UniteAPIClient:
                     items_win_rate,
                     items_pick_rate,
                 )
-                pokemon.add_build(build_obj)
                 self.builds.append(build_obj)
 
     def print_by_build_win_rate(self):

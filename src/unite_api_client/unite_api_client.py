@@ -1,4 +1,5 @@
 from statistics import quantiles
+
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
 
@@ -16,9 +17,8 @@ class UniteAPIClient:
         self.pokemons: list[Pokemon] = [Pokemon] * 0
         self.builds: list[Build] = [Build] * 0
 
-    async def update_pokemon_list(self):
-        async with AsyncClient() as client:
-            response = await client.get(self.meta_url, follow_redirects=True)
+    async def update_pokemon_list(self, session: AsyncClient):
+        response = await session.get(self.meta_url, follow_redirects=True)
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -37,15 +37,14 @@ class UniteAPIClient:
                 response.status_code,
             )
 
-    async def get_pokemon_meta(self, pokemon: Pokemon):
+    async def get_pokemon_meta(self, pokemon: Pokemon, session: AsyncClient):
         success = False
         while not success:
             try:
-                async with AsyncClient() as client:
-                    response = await client.get(
-                        self.route_pokemon_meta_url + pokemon.url_name,
-                        follow_redirects=True,
-                    )
+                response = await session.get(
+                    self.route_pokemon_meta_url + pokemon.url_name,
+                    follow_redirects=True,
+                )
                 success = True
             except Exception as error:
                 print(

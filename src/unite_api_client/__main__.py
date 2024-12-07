@@ -1,18 +1,24 @@
 import timeit
 from asyncio import create_task, gather, run
 
+from httpx import AsyncClient
+
 from unite_api_client.unite_api_client import UniteAPIClient
 
 
 async def uniteapi_client():
     api = UniteAPIClient()
-    task = create_task(api.update_pokemon_list())
-    await task
+    async with AsyncClient() as session:
+        task = create_task(api.update_pokemon_list(session))
+        await task
 
-    result = gather(
-        *[api.get_pokemon_meta(pokemon) for pokemon in api.pokemons]
-    )
-    await result
+        result = gather(
+            *[
+                api.get_pokemon_meta(pokemon, session)
+                for pokemon in api.pokemons
+            ]
+        )
+        await result
     api.save_build_win_rate()
     api.save_build_pick_rate()
     api.save_pokemon_name()

@@ -59,20 +59,16 @@ class UniteAPIClient:
             )
             return False
         soup = BeautifulSoup(response.content, "html.parser")
-        items_pick_rate_str = soup.select(
+        pkm_pick_rate_str = soup.select(
             "div > div.m_4081bf90.mantine-Group-root > div:nth-child(1) > div > p"
         )
-        items_win_rate_str = soup.select(
+        pkm_win_rate_str = soup.select(
             "div > div.m_4081bf90.mantine-Group-root > div:nth-child(2) > div > p"
         )
-        items_pick_rate = float(
-            items_pick_rate_str[0].get_text().replace("%", "")
-        )
-        items_win_rate = float(
-            items_win_rate_str[0].get_text().replace("%", "")
-        )
-        pokemon.set_pick_rate(items_pick_rate)
-        pokemon.set_win_rate(items_win_rate)
+        pkm_pick_rate = float(pkm_pick_rate_str[0].get_text().replace("%", ""))
+        pkm_win_rate = float(pkm_win_rate_str[0].get_text().replace("%", ""))
+        pokemon.set_pick_rate(pkm_pick_rate)
+        pokemon.set_win_rate(pkm_win_rate)
         builds = soup.find_all("div", class_="sc-a9315c2e-0 dNgHcB")
         for build in builds:
             move1and2_pick_rate_str = build.select(

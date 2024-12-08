@@ -39,7 +39,6 @@ class DatabaseClient:
         for build in self.builds:
             pr_list.append(build.pick_rate)
         quant = quantiles(pr_list)
-        print(f"Quantiles are {quant}")
         return quant[-1]
 
     def set_pick_rate_threshold(self, pick_rate_threshold):

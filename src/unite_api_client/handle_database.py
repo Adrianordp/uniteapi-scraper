@@ -36,7 +36,7 @@ class HandleDatabase:
                 (date, number_of_games, table_name),
             )
         except sqlite3.IntegrityError:
-            print(f"Table {table_name} already registered")
+            # print(f"Table {table_name} already registered")
             return False
         print(f"New data found. Table {table_name} registered")
         self.conn.commit()

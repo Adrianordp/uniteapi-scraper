@@ -54,8 +54,7 @@ class DatabaseClient:
         threshold = np.percentile(pick_rate_list, 100 - self.percentile)
         self.set_pick_rate_threshold(threshold)
 
-    @ignore_pipe_error
-    def _print_pokemons(self):
+    def _get_pokemon_builds(self):
         seen_pokemon = set()
         builds: list[Build] = [Build] * 0
         for build in self.builds:
@@ -64,10 +63,18 @@ class DatabaseClient:
             else:
                 seen_pokemon.add(build.pokemon.name)
             builds.append(build)
+        return builds
 
+    def _set_threshold_if_using_pkm_percentile(self, builds: list[Build]):
         if self.using_percentile:
             pick_rate_list = [build.pkm_pick_rate for build in builds]
             self._set_percentile_threshold(pick_rate_list)
+
+    @ignore_pipe_error
+    def _print_pokemons(self):
+        builds = self._get_pokemon_builds()
+
+        self._set_threshold_if_using_pkm_percentile(builds)
 
         for build in builds:
             if build.pkm_pick_rate < self.pick_rate_threshold:

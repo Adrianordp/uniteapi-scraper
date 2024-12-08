@@ -101,8 +101,7 @@ class DatabaseClient:
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
         self._print_pokemons()
 
-    @ignore_pipe_error
-    def _print_builds(self):
+    def _get_move_builds(self):
         builds: list[Build] = [Build] * 0
 
         for build in self.builds:
@@ -110,9 +109,18 @@ class DatabaseClient:
                 continue
             builds.append(build)
 
+        return builds
+
+    def _set_threshold_if_using_move_percentile(self, builds: list[Build]):
         if self.using_percentile:
             pick_rate_list = [build.build_pick_rate for build in builds]
             self._set_percentile_threshold(pick_rate_list)
+
+    @ignore_pipe_error
+    def _print_builds(self):
+        builds = self._get_move_builds()
+
+        self._set_threshold_if_using_move_percentile(builds)
 
         for build in builds:
             if build.build_pick_rate < self.pick_rate_threshold:

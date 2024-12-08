@@ -7,16 +7,17 @@ from unite_api_client.db_client import DatabaseClient
 class ArgParser:
     def __init__(self):
         self.parser = argparse.ArgumentParser()
-        self.group = self.parser.add_mutually_exclusive_group()
+        self.group_target = self.parser.add_mutually_exclusive_group()
+        self.group_threshold = self.parser.add_mutually_exclusive_group()
         self.args = None
 
     def add_arguments(self):
-        self.group.add_argument(
+        self.group_target.add_argument(
             "--pokemon",
             choices=["name", "win-rate", "pick-rate"],
         )
 
-        self.group.add_argument(
+        self.group_target.add_argument(
             "--build",
             choices=[
                 "pkm-name",
@@ -27,7 +28,7 @@ class ArgParser:
             ],
         )
 
-        self.group.add_argument(
+        self.group_target.add_argument(
             "--full-build",
             choices=[
                 "pkm-name",
@@ -44,10 +45,16 @@ class ArgParser:
             help="Sort by build pick rate",
         )
 
-        self.parser.add_argument(
+        self.group_threshold.add_argument(
             "--limit",
             type=float,
             help="Limit the lower percentage to consider",
+        )
+
+        self.group_threshold.add_argument(
+            "--percentile",
+            type=float,
+            help="Consider results according to given percentile in meta",
         )
 
     def parse_args(self):
@@ -63,6 +70,8 @@ class ArgParser:
     def process_args(self, dbc: DatabaseClient):
         if self.args.limit:
             dbc.set_pick_rate_threshold(self.args.limit)
+        elif self.args.percentile:
+            dbc.set_percentile(self.args.percentile)
 
         if self.args.pokemon == "name":
             dbc.print_pokemon_by_name()

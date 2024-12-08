@@ -1,7 +1,19 @@
+import errno
 from statistics import quantiles
 
 from unite_api_client.build import Build
 from unite_api_client.handle_database import HandleDatabase
+
+
+def ignore_pipe_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except IOError as error:
+            if error.errno != errno.EPIPE:
+                pass
+
+    return inner
 
 
 class DatabaseClient:

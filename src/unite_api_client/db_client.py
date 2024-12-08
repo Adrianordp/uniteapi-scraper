@@ -5,6 +5,7 @@ import numpy as np
 
 from unite_api_client.build import Build
 from unite_api_client.handle_database import HandleDatabase
+from unite_api_client.paint import Paint
 
 
 def ignore_pipe_error(func):
@@ -72,6 +73,7 @@ class DatabaseClient:
 
     @ignore_pipe_error
     def _print_pokemons(self):
+        p = Paint()
         builds = self._get_pokemon_builds()
 
         self._set_threshold_if_using_pkm_percentile(builds)
@@ -80,9 +82,9 @@ class DatabaseClient:
             if build.pkm_pick_rate < self.pick_rate_threshold:
                 continue
             string = (
-                f"pkm: {build.pokemon}, "
-                f"WR: {build.pkm_win_rate} %, "
-                f"PR: {build.pkm_pick_rate} %"
+                f"pkm: {p.red(build.pokemon)}, "
+                f"WR: {p.green(build.pkm_win_rate)} %, "
+                f"PR: {p.blue(build.pkm_pick_rate)} %"
             )
             print(string)
 
@@ -122,18 +124,20 @@ class DatabaseClient:
 
         self._set_threshold_if_using_move_percentile(builds)
 
+        p = Paint()
+
         for build in builds:
             if build.build_pick_rate < self.pick_rate_threshold:
                 continue
             string = (
-                f"pkm: {build.pokemon}, "
-                f"m1: {build.move1}, "
-                f"m2: {build.move2}, "
-                f"pkmWR: {build.pkm_win_rate} %, "
-                f"pkmPR: {build.pkm_pick_rate} %, "
-                f"m1m2WR: {build.m1m2_win_rate} %, "
-                f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.build_pick_rate:.4f} %"
+                f"pkm: {p.red(build.pokemon)}, "
+                f"m1: {p.orange(build.move1)}, "
+                f"m2: {p.orange(build.move2)}, "
+                f"pkmWR: {p.green(build.pkm_win_rate)} %, "
+                f"pkmPR: {p.blue(build.pkm_pick_rate)} %, "
+                f"m1m2WR: {p.light_green(build.m1m2_win_rate)} %, "
+                f"m1m2PR: {p.light_blue(build.m1m2_pick_rate)} %, "
+                f"PR: {p.lighter_blue(f'{build.build_pick_rate:.4f}')} %"
             )
             print(string)
 
@@ -183,10 +187,26 @@ class DatabaseClient:
 
         self._set_threshold_if_using_full_build_percentile(builds)
 
+        p = Paint()
+
         for build in builds:
             if build.pick_rate < self.pick_rate_threshold:
                 continue
-            print(build)
+            string = (
+                f"pkm: {p.red(build.pokemon)}, "
+                f"m1: {p.orange(build.move1)}, "
+                f"m2: {p.orange(build.move2)}, "
+                f"i: {p.yellow(build.item)}, "
+                f"pkmWR: {p.green(build.pkm_win_rate)} %, "
+                f"pkmPR: {p.blue(build.pkm_pick_rate)} %, "
+                f"m1m2WR: {p.light_green(build.m1m2_win_rate)} %, "
+                f"m1m2PR: {p.light_blue(build.m1m2_pick_rate)} %, "
+                f"m1m2iWR: {p.magenta(build.m1m2i_win_rate)} %, "
+                f"m1m2iPR: {p.cyan(build.m1m2i_pick_rate)} %, "
+                f"BPR: {p.lighter_blue(f'{build.build_pick_rate:.3f}')} %, "
+                f"PR: {p.light_magenta(f'{build.pick_rate:.3f}')} %"
+            )
+            print(string)
 
     def print_full_build_by_pokemon_name(self):
         self.builds.sort(reverse=True)

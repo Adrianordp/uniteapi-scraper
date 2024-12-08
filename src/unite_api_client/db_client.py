@@ -197,14 +197,14 @@ class DatabaseClient:
                 f"m1: {p.orange(build.move1)}, "
                 f"m2: {p.orange(build.move2)}, "
                 f"i: {p.yellow(build.item)}, "
-                f"pkmWR: {p.green(build.pkm_win_rate)} %, "
-                f"pkmPR: {p.blue(build.pkm_pick_rate)} %, "
-                f"m1m2WR: {p.light_green(build.m1m2_win_rate)} %, "
-                f"m1m2PR: {p.light_blue(build.m1m2_pick_rate)} %, "
-                f"m1m2iWR: {p.magenta(build.m1m2i_win_rate)} %, "
-                f"m1m2iPR: {p.cyan(build.m1m2i_pick_rate)} %, "
-                f"BPR: {p.lighter_blue(f'{build.build_pick_rate:.3f}')} %, "
-                f"PR: {p.light_magenta(f'{build.pick_rate:.3f}')} %"
+                f"pkmWR: {p.green(f'{build.pkm_win_rate}%')}, "
+                f"pkmPR: {p.blue(f'{build.pkm_pick_rate}%')}, "
+                f"m1m2WR: {p.light_green(f'{build.m1m2_win_rate}%')}, "
+                f"m1m2PR: {p.light_blue(f'{build.m1m2_pick_rate}%')}, "
+                f"m1m2iWR: {p.magenta(f'{build.m1m2i_win_rate}%')}, "
+                f"m1m2iPR: {p.cyan(f'{build.m1m2i_pick_rate}%')}, "
+                f"BPR: {p.lighter_blue(f'{build.build_pick_rate:.3f}%')}, "
+                f"PR: {p.light_magenta(f'{build.pick_rate:.3f}%')}"
             )
             print(string)
 

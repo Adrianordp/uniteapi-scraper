@@ -149,9 +149,17 @@ class DatabaseClient:
 
     @ignore_pipe_error
     def _print_full_builds(self):
+        builds: list[Build] = [Build] * 0
         for build in self.builds:
             if build.item == "Any":
                 continue
+            builds.append(build)
+
+        if self.using_percentile:
+            pick_rate_list = [build.pick_rate for build in builds]
+            self._set_percentile_threshold(pick_rate_list)
+
+        for build in builds:
             if build.pick_rate < self.pick_rate_threshold:
                 continue
             print(build)

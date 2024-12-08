@@ -38,6 +38,10 @@ class DatabaseClient:
         print(f"Quantiles are {quant}")
         return quant[-1]
 
+    def set_pick_rate_threshold(self, pick_rate_threshold):
+        self.pick_rate_threshold = pick_rate_threshold
+
+    @ignore_pipe_error
     def _print_pokemons(self):
         seen_pokemon = set()
         for build in self.builds:
@@ -54,9 +58,6 @@ class DatabaseClient:
             )
             print(string)
 
-    def set_pick_rate_threshold(self, pick_rate_threshold):
-        self.pick_rate_threshold = pick_rate_threshold
-
     def print_pokemon_by_name(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
@@ -72,11 +73,12 @@ class DatabaseClient:
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
         self._print_pokemons()
 
-    def print_build_by_pokemon_name(self):
-        self.builds.sort(reverse=True)
-        self.builds.sort(key=lambda x: x.pokemon.name)
+    @ignore_pipe_error
+    def _print_builds(self):
         for build in self.builds:
             if build.item != "Any":
+                continue
+            if build.build_pick_rate < self.pick_rate_threshold:
                 continue
             string = (
                 f"pkm: {build.pokemon}, "
@@ -86,88 +88,34 @@ class DatabaseClient:
                 f"pkmPR: {build.pkm_pick_rate} %, "
                 f"m1m2WR: {build.m1m2_win_rate} %, "
                 f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.pick_rate:.4f} %"
+                f"PR: {build.build_pick_rate:.4f} %"
             )
             print(string)
+
+    def print_build_by_pokemon_name(self):
+        self.builds.sort(reverse=True)
+        self.builds.sort(key=lambda x: x.pokemon.name)
+        self._print_builds()
 
     def print_build_by_pokemon_win_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_win_rate, reverse=True)
-        for build in self.builds:
-            if build.item != "Any":
-                continue
-            if build.build_pick_rate < self.pick_rate_threshold:
-                continue
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"m1: {build.move1}, "
-                f"m2: {build.move2}, "
-                f"pkmWR: {build.pkm_win_rate} %, "
-                f"pkmPR: {build.pkm_pick_rate} %, "
-                f"m1m2WR: {build.m1m2_win_rate} %, "
-                f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.pick_rate:.4f} %"
-            )
-            print(string)
+        self._print_builds()
 
     def print_build_by_pokemon_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
-        for build in self.builds:
-            if build.item != "Any":
-                continue
-            if build.build_pick_rate < self.pick_rate_threshold:
-                continue
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"m1: {build.move1}, "
-                f"m2: {build.move2}, "
-                f"pkmWR: {build.pkm_win_rate} %, "
-                f"pkmPR: {build.pkm_pick_rate} %, "
-                f"m1m2WR: {build.m1m2_win_rate} %, "
-                f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.pick_rate:.4f} %"
-            )
-            print(string)
+        self._print_builds()
 
     def print_build_by_win_rate(self):
         self.builds.sort(reverse=True)
-        for build in self.builds:
-            if build.item != "Any":
-                continue
-            if build.build_pick_rate < self.pick_rate_threshold:
-                continue
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"m1: {build.move1}, "
-                f"m2: {build.move2}, "
-                f"pkmWR: {build.pkm_win_rate} %, "
-                f"pkmPR: {build.pkm_pick_rate} %, "
-                f"m1m2WR: {build.m1m2_win_rate} %, "
-                f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.pick_rate:.4f} %"
-            )
-            print(string)
+        self.builds.sort(key=lambda x: x.m1m2_win_rate, reverse=True)
+        self._print_builds()
 
     def print_build_by_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
-        for build in self.builds:
-            if build.item != "Any":
-                continue
-            if build.build_pick_rate < self.pick_rate_threshold:
-                continue
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"m1: {build.move1}, "
-                f"m2: {build.move2}, "
-                f"pkmWR: {build.pkm_win_rate} %, "
-                f"pkmPR: {build.pkm_pick_rate} %, "
-                f"m1m2WR: {build.m1m2_win_rate} %, "
-                f"m1m2PR: {build.m1m2_pick_rate} %, "
-                f"PR: {build.pick_rate:.4f} %"
-            )
-            print(string)
+        self._print_builds()
 
     def print_full_build_by_pokemon_name(self):
         self.builds.sort(reverse=True)

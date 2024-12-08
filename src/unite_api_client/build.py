@@ -26,10 +26,13 @@ class Build:
         self.pkm_pick_rate = pokemon.pick_rate
 
         self.win_rate = self.m1m2_win_rate
-        self.pick_rate = self.pokemon.pick_rate * self.m1m2_pick_rate / 100.0
+        self.build_pick_rate = (
+            self.pokemon.pick_rate * self.m1m2_pick_rate / 100
+        )
+        self.pick_rate = self.build_pick_rate
         if self.item != "Any":
             self.win_rate = self.m1m2i_win_rate
-            self.pick_rate = self.pick_rate * self.m1m2i_pick_rate / 100.0
+            self.pick_rate = self.build_pick_rate * self.m1m2i_pick_rate / 100
 
     def __str__(self):
         if self.item == "Any":
@@ -42,7 +45,7 @@ class Build:
                 f"m1m2PR: {self.m1m2_pick_rate} %, "
                 f"pkmWR: {self.pkm_win_rate} %, "
                 f"pkmPR: {self.pkm_pick_rate} %, "
-                f"PR: {self.pick_rate:.4f} %"
+                f"BPR: {self.build_pick_rate:.3f} %"
             )
         return (
             f"pkm: {self.pokemon}, "
@@ -55,7 +58,8 @@ class Build:
             f"pkmPR: {self.pkm_pick_rate} %, "
             f"m1m2iWR: {self.m1m2i_win_rate} %, "
             f"m1m2iPR: {self.m1m2i_pick_rate} %, "
-            f"PR: {self.pick_rate:.6f} %"
+            f"BPR: {self.build_pick_rate:.3f} %, "
+            f"PR: {self.pick_rate:.3f} %"
         )
 
     @staticmethod

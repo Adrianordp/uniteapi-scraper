@@ -65,11 +65,11 @@ class ArgParser:
             dbc.set_pick_rate_threshold(self.args.limit)
 
         if self.args.pokemon == "name":
-            dbc.print_by_pokemon_name()
+            dbc.print_pokemon_by_name()
         elif self.args.pokemon == "win-rate":
-            dbc.print_by_pokemon_win_rate()
+            dbc.print_pokemon_by_win_rate()
         elif self.args.pokemon == "pick-rate":
-            dbc.print_by_pokemon_pick_rate()
+            dbc.print_pokemon_by_pick_rate()
 
         elif self.args.build == "pkm-name":
             dbc.print_build_by_pokemon_name()

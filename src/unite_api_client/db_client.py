@@ -26,62 +26,39 @@ class DatabaseClient:
         print(f"Quantiles are {quant}")
         return quant[-1]
 
+    def _print_pokemons(self):
+        seen_pokemon = set()
+        for build in self.builds:
+            if build.pokemon.name in seen_pokemon:
+                continue
+            if build.pkm_pick_rate < self.pick_rate_threshold:
+                continue
+            else:
+                seen_pokemon.add(build.pokemon.name)
+            string = (
+                f"pkm: {build.pokemon}, "
+                f"WR: {build.pkm_win_rate} %, "
+                f"PR: {build.pkm_pick_rate} %"
+            )
+            print(string)
+
     def set_pick_rate_threshold(self, pick_rate_threshold):
         self.pick_rate_threshold = pick_rate_threshold
 
-    def print_by_pokemon_name(self):
+    def print_pokemon_by_name(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
-        past_pokemon = set()
-        for build in self.builds:
-            if build.pokemon.name in past_pokemon:
-                continue
-            if build.pkm_pick_rate < self.pick_rate_threshold:
-                continue
-            else:
-                past_pokemon.add(build.pokemon.name)
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"WR: {build.pkm_win_rate} %, "
-                f"PR: {build.pkm_pick_rate} %"
-            )
-            print(string)
+        self._print_pokemons()
 
-    def print_by_pokemon_win_rate(self):
+    def print_pokemon_by_win_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_win_rate, reverse=True)
-        past_pokemon = set()
-        for build in self.builds:
-            if build.pokemon.name in past_pokemon:
-                continue
-            if build.pkm_pick_rate < self.pick_rate_threshold:
-                continue
-            else:
-                past_pokemon.add(build.pokemon.name)
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"WR: {build.pkm_win_rate} %, "
-                f"PR: {build.pkm_pick_rate} %"
-            )
-            print(string)
+        self._print_pokemons()
 
-    def print_by_pokemon_pick_rate(self):
+    def print_pokemon_by_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
-        past_pokemon = set()
-        for build in self.builds:
-            if build.pokemon.name in past_pokemon:
-                continue
-            if build.pkm_pick_rate < self.pick_rate_threshold:
-                continue
-            else:
-                past_pokemon.add(build.pokemon.name)
-            string = (
-                f"pkm: {build.pokemon}, "
-                f"WR: {build.pkm_win_rate} %, "
-                f"PR: {build.pkm_pick_rate} %"
-            )
-            print(string)
+        self._print_pokemons()
 
     def print_build_by_pokemon_name(self):
         self.builds.sort(reverse=True)

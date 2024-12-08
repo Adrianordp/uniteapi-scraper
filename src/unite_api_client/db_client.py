@@ -1,6 +1,8 @@
 import errno
 from statistics import quantiles
 
+import numpy as np
+
 from unite_api_client.build import Build
 from unite_api_client.handle_database import HandleDatabase
 
@@ -22,6 +24,8 @@ class DatabaseClient:
         self.builds: list[Build] = [Build] * 0
         self.table_name: str = self.handle_database.get_table_names()[-1][1]
         self.pick_rate_threshold = 0
+        self.using_percentile = False
+        self.percentile = 0
 
     def _load_all_builds(self):
         builds = self.handle_database.get_all_builds(self.table_name)
@@ -40,6 +44,16 @@ class DatabaseClient:
 
     def set_pick_rate_threshold(self, pick_rate_threshold):
         self.pick_rate_threshold = pick_rate_threshold
+
+    def set_percentile(self, percentile):
+        self.using_percentile = True
+        if percentile > 100 or percentile < 0:
+            raise ValueError(f"Invalid percentile: {percentile}")
+        self.percentile = percentile
+
+    def _set_percentile_threshold(self, pick_rate_list: list[float]):
+        threshold = np.percentile(pick_rate_list, 100 - self.percentile)
+        self.set_pick_rate_threshold(threshold)
 
     @ignore_pipe_error
     def _print_pokemons(self):

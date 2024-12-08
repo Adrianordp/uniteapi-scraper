@@ -10,6 +10,7 @@ dependencies = [
     "flask",
     "httpx",
     "beautifulsoup4",
+    "numpy",
     ]
 authors = [
     { name = "Adriano Rodrigues de Paula", email = "adrianordp1@gmail.com"},

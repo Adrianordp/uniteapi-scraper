@@ -13,12 +13,14 @@ class ArgParser:
 
     def add_arguments(self):
         self.group_target.add_argument(
-            "--pokemon",
+            "--Pokemon",
+            "-P",
             choices=["name", "win-rate", "pick-rate"],
         )
 
         self.group_target.add_argument(
-            "--build",
+            "--Build",
+            "-B",
             choices=[
                 "pkm-name",
                 "pkm-win-rate",
@@ -29,7 +31,8 @@ class ArgParser:
         )
 
         self.group_target.add_argument(
-            "--full-build",
+            "--Full-build",
+            "-F",
             choices=[
                 "pkm-name",
                 "pkm-win-rate",
@@ -47,12 +50,14 @@ class ArgParser:
 
         self.group_threshold.add_argument(
             "--limit",
+            "-l",
             type=float,
             help="Limit the lower percentage to consider",
         )
 
         self.group_threshold.add_argument(
             "--percentile",
+            "-p",
             type=float,
             help="Consider results according to given percentile in meta",
         )
@@ -73,39 +78,39 @@ class ArgParser:
         elif self.args.percentile:
             dbc.set_percentile(self.args.percentile)
 
-        if self.args.pokemon == "name":
+        if self.args.Pokemon == "name":
             dbc.print_pokemon_by_name()
-        elif self.args.pokemon == "win-rate":
+        elif self.args.Pokemon == "win-rate":
             dbc.print_pokemon_by_win_rate()
-        elif self.args.pokemon == "pick-rate":
+        elif self.args.Pokemon == "pick-rate":
             dbc.print_pokemon_by_pick_rate()
 
-        elif self.args.build == "pkm-name":
+        elif self.args.Build == "pkm-name":
             dbc.print_build_by_pokemon_name()
-        elif self.args.build == "pkm-win-rate":
+        elif self.args.Build == "pkm-win-rate":
             dbc.print_build_by_pokemon_win_rate()
-        elif self.args.build == "pkm-pick-rate":
+        elif self.args.Build == "pkm-pick-rate":
             dbc.print_build_by_pokemon_pick_rate()
-        elif self.args.build == "win-rate":
+        elif self.args.Build == "win-rate":
             dbc.print_build_by_win_rate()
-        elif self.args.build == "pick-rate":
+        elif self.args.Build == "pick-rate":
             dbc.print_build_by_pick_rate()
 
-        elif self.args.full_build == "pkm-name":
+        elif self.args.Full_build == "pkm-name":
             dbc.print_full_build_by_pokemon_name()
-        elif self.args.full_build == "pkm-win-rate":
+        elif self.args.Full_build == "pkm-win-rate":
             dbc.print_full_build_by_pokemon_win_rate()
-        elif self.args.full_build == "pkm-pick-rate":
+        elif self.args.Full_build == "pkm-pick-rate":
             dbc.print_full_build_by_pokemon_pick_rate()
-        elif self.args.full_build == "build-win-rate":
+        elif self.args.Full_build == "build-win-rate":
             dbc.print_full_build_by_build_win_rate()
-        elif self.args.full_build == "build-pick-rate":
+        elif self.args.Full_build == "build-pick-rate":
             dbc.print_full_build_by_build_pick_rate()
-        elif self.args.full_build == "item":
+        elif self.args.Full_build == "item":
             dbc.print_full_build_by_item()
-        elif self.args.full_build == "win-rate":
+        elif self.args.Full_build == "win-rate":
             dbc.print_full_build_by_win_rate()
-        elif self.args.full_build == "pick-rate":
+        elif self.args.Full_build == "pick-rate":
             dbc.print_full_build_by_pick_rate()
 
 

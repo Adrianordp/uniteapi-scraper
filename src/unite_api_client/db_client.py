@@ -117,84 +117,58 @@ class DatabaseClient:
         self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
         self._print_builds()
 
-    def print_full_build_by_pokemon_name(self):
-        self.builds.sort(reverse=True)
-        self.builds.sort(key=lambda x: x.pokemon.name)
+    @ignore_pipe_error
+    def _print_full_builds(self):
         for build in self.builds:
             if build.item == "Any":
                 continue
             if build.pick_rate < self.pick_rate_threshold:
                 continue
             print(build)
+
+    def print_full_build_by_pokemon_name(self):
+        self.builds.sort(reverse=True)
+        self.builds.sort(key=lambda x: x.pokemon.name)
+        self._print_full_builds()
 
     def print_full_build_by_pokemon_win_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_win_rate, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_pokemon_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.pick_rate, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_build_win_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.m1m2_win_rate, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_build_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.build_pick_rate, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_item(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.item, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_win_rate(self):
         self.builds.sort(reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
 
     def print_full_build_by_pick_rate(self):
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
-        for build in self.builds:
-            if build.item == "Any":
-                continue
-            if build.pick_rate < self.pick_rate_threshold:
-                continue
-            print(build)
+        self._print_full_builds()
+
+    def print_full_build_by_item(self):
+        self.builds.sort(reverse=True)
+        self.builds.sort(key=lambda x: x.item)
+        self._print_full_builds()
 
     def print_by_build_win_rate25(self):
         threshold = self._get_pick_rate_threshold()
@@ -202,10 +176,4 @@ class DatabaseClient:
         for build in self.builds:
             if build.pick_rate < threshold:
                 continue
-            print(build)
-
-    def print_by_item(self):
-        self.builds.sort(reverse=True)
-        self.builds.sort(key=lambda x: x.item)
-        for build in self.builds:
             print(build)

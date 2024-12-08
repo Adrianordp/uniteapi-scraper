@@ -93,7 +93,7 @@ class ArgParser:
         elif self.args.full_build == "build-pick-rate":
             dbc.print_full_build_by_build_pick_rate()
         elif self.args.full_build == "item":
-            dbc.print_by_item()
+            dbc.print_full_build_by_item()
         elif self.args.full_build == "win-rate":
             dbc.print_full_build_by_win_rate()
         elif self.args.full_build == "pick-rate":

@@ -30,7 +30,6 @@ class DatabaseClient:
         self.pick_rate_threshold = pick_rate_threshold
 
     def print_by_pokemon_name(self):
-        print("\nSorted by pokemon")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
         past_pokemon = set()
@@ -49,7 +48,6 @@ class DatabaseClient:
             print(string)
 
     def print_by_pokemon_win_rate(self):
-        print("\nSorted by pokemon win rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_win_rate, reverse=True)
         past_pokemon = set()
@@ -68,7 +66,6 @@ class DatabaseClient:
             print(string)
 
     def print_by_pokemon_pick_rate(self):
-        print("\nSorted by pokemon pick rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pkm_pick_rate, reverse=True)
         past_pokemon = set()
@@ -87,7 +84,6 @@ class DatabaseClient:
             print(string)
 
     def print_build_by_pokemon_name(self):
-        print("\nSorted build by pokemon name")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
         for build in self.builds:
@@ -165,7 +161,6 @@ class DatabaseClient:
             print(string)
 
     def print_build_by_pick_rate(self):
-        print("\nSorted by pick rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pick_rate, reverse=True)
         for build in self.builds:
@@ -186,7 +181,6 @@ class DatabaseClient:
             print(string)
 
     def print_full_build_by_pokemon_name(self):
-        print("\nSorted full build by pokemon name")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.name)
         for build in self.builds:
@@ -207,7 +201,6 @@ class DatabaseClient:
             print(build)
 
     def print_full_build_by_pokemon_pick_rate(self):
-        print("\nSorted by pick rate")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.pokemon.pick_rate, reverse=True)
         for build in self.builds:
@@ -275,7 +268,6 @@ class DatabaseClient:
             print(build)
 
     def print_by_item(self):
-        print("\nSorted by item")
         self.builds.sort(reverse=True)
         self.builds.sort(key=lambda x: x.item)
         for build in self.builds:

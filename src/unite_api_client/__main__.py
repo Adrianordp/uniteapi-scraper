@@ -1,8 +1,9 @@
-import timeit
+import sys
 from asyncio import create_task, gather, run
 
 from httpx import AsyncClient
 
+from unite_api_client.arg_parse import ArgParser
 from unite_api_client.db_client import DatabaseClient
 from unite_api_client.unite_api_client import UniteAPIClient
 
@@ -32,10 +33,18 @@ async def uniteapi_client():
 
 
 def main():
+    arg_parser = ArgParser()
+
+    if "-h" in sys.argv or "--help" in sys.argv:
+        arg_parser.run()
+        return
+
     run(uniteapi_client())
-    db = DatabaseClient()
-    db._load_all_builds()
-    db.print_by_build_win_rate25()
+
+    dbc = DatabaseClient()
+    dbc._load_all_builds()
+
+    arg_parser.run(dbc)
 
 
 if __name__ == "__main__":

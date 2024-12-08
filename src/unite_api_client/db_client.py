@@ -58,13 +58,21 @@ class DatabaseClient:
     @ignore_pipe_error
     def _print_pokemons(self):
         seen_pokemon = set()
+        builds: list[Build] = [Build] * 0
         for build in self.builds:
             if build.pokemon.name in seen_pokemon:
                 continue
-            if build.pkm_pick_rate < self.pick_rate_threshold:
-                continue
             else:
                 seen_pokemon.add(build.pokemon.name)
+            builds.append(build)
+
+        if self.using_percentile:
+            pick_rate_list = [build.pkm_pick_rate for build in builds]
+            self._set_percentile_threshold(pick_rate_list)
+
+        for build in builds:
+            if build.pkm_pick_rate < self.pick_rate_threshold:
+                continue
             string = (
                 f"pkm: {build.pokemon}, "
                 f"WR: {build.pkm_win_rate} %, "

@@ -12,6 +12,18 @@ class ArgParser:
         self.args = None
 
     def add_arguments(self):
+        self.parser.add_argument(
+            "--list-tables",
+            action="store_true",
+            help="List available tables with builds",
+        )
+
+        self.parser.add_argument(
+            "--table",
+            type=str,
+            help="Table name to use. Use --list-tables to see available tables",
+        )
+
         self.group_target.add_argument(
             "--Pokemon",
             "-P",
@@ -75,6 +87,14 @@ class ArgParser:
         self.process_args(dbc)
 
     def process_args(self, dbc: DatabaseClient):
+        if self.args.list_tables:
+            for table in dbc.get_table_names():
+                print(table)
+            return
+
+        if self.args.table:
+            dbc.set_table_name(self.args.table)
+
         dbc._load_all_builds()
 
         if self.args.limit:

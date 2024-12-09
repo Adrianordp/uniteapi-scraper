@@ -28,8 +28,18 @@ class DatabaseClient:
         self.using_percentile = False
         self.percentile = 0
 
+    def set_table_name(self, table_name):
+        self.table_name = table_name
+
+    def get_talbe_names(self):
+        self.handle_database.cursor.execute("SELECT * FROM table_list")
+        fetch = self.handle_database.cursor.fetchall()
+
+        return [row[3] for row in fetch]
+
     def _load_all_builds(self):
         builds = self.handle_database.get_all_builds(self.table_name)
+        self.builds: list[Build] = [Build] * 0
         for build in builds:
             self.builds.append(Build.convert_db_data_to_build(build))
 

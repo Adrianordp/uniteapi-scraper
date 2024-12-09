@@ -55,6 +55,7 @@ class UniteAPIClient:
 
     async def get_pokemon_meta(self, pokemon: Pokemon, session: AsyncClient):
         success = False
+        retrying_count = 0
         while not success:
             try:
                 response = await session.get(
@@ -62,10 +63,19 @@ class UniteAPIClient:
                     follow_redirects=True,
                 )
                 success = True
+                if retrying_count > 0:
+                    print(f"Successfully retrieved {pokemon.url_name}.")
             except Exception as error:
                 print(
-                    f"Error: {error} in url {self.route_pokemon_meta_url + pokemon.url_name}"
+                    f"Error: {error} in url {self.route_pokemon_meta_url + pokemon.url_name}. Retrying..."
                 )
+                retrying_count += 1
+                if retrying_count > 10:
+                    print(
+                        f"Failed to retrieve the webpage {pokemon.url_name}. Status code:",
+                        response.status_code,
+                    )
+                    return False
 
         # Check if the request was successful (status code 200)
         if response.status_code != 200:

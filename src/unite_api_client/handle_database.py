@@ -70,7 +70,6 @@ class HandleDatabase:
         self.conn.close()
 
     def insert_build(self, build):
-        print(build)
         self.cursor.execute(
             f"""
             INSERT INTO {self.table_name} (pokemon, role, move1, move2, item, m1m2_win_rate, m1m2_pick_rate, m1m2i_win_rate, m1m2i_pick_rate, pkm_win_rate, pkm_pick_rate, win_rate, pick_rate)

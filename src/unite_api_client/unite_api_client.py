@@ -150,7 +150,6 @@ class UniteAPIClient:
                 self.builds.append(build_obj)
 
     def save_builds_to_database(self):
-        self.handle_database.create_table(self.table_name)
         for build in self.builds:
             self.handle_database.insert_build(build)
 

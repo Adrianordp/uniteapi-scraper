@@ -40,6 +40,7 @@ class HandleDatabase:
             return False
         print(f"New data found. Table {table_name} registered")
         self.conn.commit()
+        self.create_table(self.table_name)
         return True
 
     def create_table(self, table_name):

@@ -16,6 +16,7 @@ class ArgParser:
             "--Pokemon",
             "-P",
             choices=["name", "win-rate", "pick-rate"],
+            help="Display pokemon data. Use choices to filter",
         )
 
         self.group_target.add_argument(
@@ -28,6 +29,7 @@ class ArgParser:
                 "win-rate",
                 "pick-rate",
             ],
+            help="Display builds data. Use choices to filter",
         )
 
         self.group_target.add_argument(
@@ -45,14 +47,14 @@ class ArgParser:
                 "win-rate",
                 "pick-rate",
             ],
-            help="Sort by build pick rate",
+            help="Display full builds data. Use choices to filter",
         )
 
         self.group_threshold.add_argument(
             "--limit",
             "-l",
             type=float,
-            help="Limit the lower percentage to consider",
+            help="Limit the lower percentage to consider while printing",
         )
 
         self.group_threshold.add_argument(

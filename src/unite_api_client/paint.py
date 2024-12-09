@@ -21,10 +21,16 @@ class Colors(enum.Enum):
 
 
 class Paint:
-    def __init__(self):
+    def __init__(self, enabled=True):
+        self.enabled = enabled
         self.colors = Colors
 
+    def set_enabled(self, is_enabled=True):
+        self.enabled = is_enabled
+
     def paint(self, text, color):
+        if not self.enabled:
+            return text
         return f"{color.value}{text}{self.colors.RESET.value}"
 
     def red(self, text):

@@ -27,6 +27,10 @@ class DatabaseClient:
         self.pick_rate_threshold = 0
         self.using_percentile = False
         self.percentile = 0
+        self.paint = Paint()
+
+    def set_colors(self, use_colors=True):
+        self.paint.set_enabled(use_colors)
 
     def set_table_name(self, table_name):
         self.table_name = table_name
@@ -83,10 +87,11 @@ class DatabaseClient:
 
     @ignore_pipe_error
     def _print_pokemons(self):
-        p = Paint()
         builds = self._get_pokemon_builds()
 
         self._set_threshold_if_using_pkm_percentile(builds)
+
+        p = self.paint
 
         for build in builds:
             if build.pkm_pick_rate < self.pick_rate_threshold:
@@ -134,7 +139,7 @@ class DatabaseClient:
 
         self._set_threshold_if_using_move_percentile(builds)
 
-        p = Paint()
+        p = self.paint
 
         for build in builds:
             if build.build_pick_rate < self.pick_rate_threshold:
@@ -197,7 +202,7 @@ class DatabaseClient:
 
         self._set_threshold_if_using_full_build_percentile(builds)
 
-        p = Paint()
+        p = self.paint
 
         for build in builds:
             if build.pick_rate < self.pick_rate_threshold:

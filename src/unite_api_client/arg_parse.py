@@ -24,6 +24,12 @@ class ArgParser:
             help="Table name to use. Use --list-tables to see available tables",
         )
 
+        self.parser.add_argument(
+            "--color",
+            action=argparse.BooleanOptionalAction,
+            help="Colorize output"
+        )
+
         self.group_target.add_argument(
             "--Pokemon",
             "-P",
@@ -94,6 +100,9 @@ class ArgParser:
 
         if self.args.table:
             dbc.set_table_name(self.args.table)
+
+        if not self.args.color:
+            dbc.set_colors(False)
 
         dbc._load_all_builds()
 

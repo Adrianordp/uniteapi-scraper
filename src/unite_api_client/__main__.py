@@ -42,7 +42,6 @@ def main():
     run(uniteapi_client())
 
     dbc = DatabaseClient()
-    dbc._load_all_builds()
 
     arg_parser.run(dbc)
 

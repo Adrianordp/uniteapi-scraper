@@ -75,6 +75,8 @@ class ArgParser:
         self.process_args(dbc)
 
     def process_args(self, dbc: DatabaseClient):
+        dbc._load_all_builds()
+
         if self.args.limit:
             dbc.set_pick_rate_threshold(self.args.limit)
         elif self.args.percentile:

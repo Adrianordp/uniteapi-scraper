@@ -31,7 +31,7 @@ class DatabaseClient:
     def set_table_name(self, table_name):
         self.table_name = table_name
 
-    def get_talbe_names(self):
+    def get_table_names(self):
         self.handle_database.cursor.execute("SELECT * FROM table_list")
         fetch = self.handle_database.cursor.fetchall()
 
